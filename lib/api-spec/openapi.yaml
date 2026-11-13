@@ -255,7 +255,7 @@ components:
             $ref: "#/components/schemas/SaleItemInput"
         paymentMethod:
           type: string
-          enum: [cash, transfer, card, other]
+          enum: [cash, transfer, card, nequi, bancolombia, other]
         customerName:
           type: ["string", "null"]
           maxLength: 120
@@ -288,7 +288,7 @@ components:
           type: integer
         paymentMethod:
           type: string
-          enum: [cash, transfer, card, other]
+          enum: [cash, transfer, card, nequi, bancolombia, other]
         customerName:
           type: ["string", "null"]
         note:

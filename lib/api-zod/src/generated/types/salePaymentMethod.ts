@@ -13,5 +13,7 @@ export const SalePaymentMethod = {
   cash: 'cash',
   transfer: 'transfer',
   card: 'card',
+  nequi: 'nequi',
+  bancolombia: 'bancolombia',
   other: 'other',
 } as const;

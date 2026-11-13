@@ -135,7 +135,7 @@ export const GetSalesQueryParams = zod.object({
 export const GetSalesResponseItem = zod.object({
   "id": zod.number().int(),
   "total": zod.number().int(),
-  "paymentMethod": zod.enum(['cash', 'transfer', 'card', 'other']),
+  "paymentMethod": zod.enum(['cash', 'transfer', 'card', 'nequi', 'bancolombia', 'other']),
   "customerName": zod.string().nullable(),
   "note": zod.string().nullable(),
   "status": zod.enum(['completed', 'cancelled']),
@@ -172,7 +172,7 @@ export const CreateSaleBody = zod.object({
   "productId": zod.number().int().min(1),
   "quantity": zod.number().int().min(1).max(createSaleBodyItemsItemQuantityMax)
 })).min(1).max(createSaleBodyItemsMax),
-  "paymentMethod": zod.enum(['cash', 'transfer', 'card', 'other']),
+  "paymentMethod": zod.enum(['cash', 'transfer', 'card', 'nequi', 'bancolombia', 'other']),
   "customerName": zod.string().max(createSaleBodyCustomerNameMax).nullish(),
   "note": zod.string().max(createSaleBodyNoteMax).nullish()
 })
@@ -180,7 +180,7 @@ export const CreateSaleBody = zod.object({
 export const CreateSaleResponse = zod.object({
   "id": zod.number().int(),
   "total": zod.number().int(),
-  "paymentMethod": zod.enum(['cash', 'transfer', 'card', 'other']),
+  "paymentMethod": zod.enum(['cash', 'transfer', 'card', 'nequi', 'bancolombia', 'other']),
   "customerName": zod.string().nullable(),
   "note": zod.string().nullable(),
   "status": zod.enum(['completed', 'cancelled']),
@@ -207,7 +207,7 @@ export const CancelSaleParams = zod.object({
 export const CancelSaleResponse = zod.object({
   "id": zod.number().int(),
   "total": zod.number().int(),
-  "paymentMethod": zod.enum(['cash', 'transfer', 'card', 'other']),
+  "paymentMethod": zod.enum(['cash', 'transfer', 'card', 'nequi', 'bancolombia', 'other']),
   "customerName": zod.string().nullable(),
   "note": zod.string().nullable(),
   "status": zod.enum(['completed', 'cancelled']),
