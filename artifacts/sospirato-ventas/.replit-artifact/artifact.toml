@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Sospirato Ventas"
+description = "Sistema sencillo para registrar ventas, consultar el historial y llevar los totales del negocio Sospirato COL."
+version = "1.0.0"
+id = "artifacts/sospirato-ventas"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18298
+
+[services.development]
+run = "pnpm --filter @workspace/sospirato-ventas run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sospirato-ventas", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/sospirato-ventas/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18298"
+BASE_PATH = "/"
