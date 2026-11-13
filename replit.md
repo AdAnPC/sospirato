@@ -1,6 +1,6 @@
-# [Project name]
+# Sospirato Ventas
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Sistema para que Sospirato COL registre ventas rápidamente y consulte sus totales, productos e historial.
 
 ## Run & Operate
 
@@ -22,23 +22,31 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/sospirato-ventas/src/App.tsx` — resumen, catálogo y registro de ventas
+- `artifacts/api-server/src/routes/` — endpoints de productos, ventas y resumen
+- `lib/api-spec/openapi.yaml` — contrato de la API y generación de hooks
+- `lib/db/src/schema/sospirato-sales.ts` — tablas de productos, ventas y líneas de venta
+- `artifacts/sospirato-ventas/src/index.css` — tema visual de la app
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Los precios y totales se guardan como pesos colombianos enteros, no como decimales.
+- Cada línea conserva el nombre y precio del producto al momento de la venta.
+- Las ventas se anulan sin borrar su historial; las anuladas no cuentan en los totales.
+- El resumen diario y semanal usa la zona horaria de Bogotá.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Registro rápido de ventas, catálogo editable, historial con búsqueda y fechas, anulación de ventas y totales del día y la semana.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+El registro habitual de una venta debe ser posible con tres clics.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Agregar los productos reales al catálogo antes de intentar registrar ventas.
+- La app no tiene inicio de sesión todavía; agregar autenticación antes de publicar datos privados.
 
 ## Pointers
 
