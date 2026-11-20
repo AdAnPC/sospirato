@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run --allow-sys ../../scripts/src/vite-runner.ts dev",
+    "build": "deno run --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run --allow-sys ../../scripts/src/vite-runner.ts build",
+    "preview": "deno run --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run --allow-sys ../../scripts/src/vite-runner.ts preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

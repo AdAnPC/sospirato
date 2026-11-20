@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "hello": "deno run src/hello.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit && deno check src/vite-runner.ts src/clean-workspace-node-modules.ts"
+  }
+}

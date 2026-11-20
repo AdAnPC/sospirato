@@ -1,0 +1,35 @@
+{
+  "workspace": [
+    "./artifacts/*",
+    "./lib/*",
+    "./lib/integrations/*",
+    "./scripts"
+  ],
+  "minimumDependencyAge": 1440,
+  "nodeModulesDir": "manual",
+  "nodeModulesLinker": "hoisted",
+  "tasks": {
+    "api": "deno task --config artifacts/api-server/deno.json dev",
+    "dev": "deno task dev:ventas",
+    "dev:ventas": "deno task --config artifacts/sospirato-ventas/deno.json dev",
+    "dev:mockup": "deno task --config artifacts/mockup-sandbox/deno.json dev",
+    "db:up": "docker compose up -d db",
+    "build": "deno task typecheck && deno task build:ventas && deno task build:mockup",
+    "build:ventas": "deno task --config artifacts/sospirato-ventas/deno.json build",
+    "build:mockup": "deno task --config artifacts/mockup-sandbox/deno.json build",
+    "typecheck": "deno task typecheck:libs && deno task typecheck:api && deno task typecheck:ventas && deno task typecheck:mockup && deno task typecheck:scripts",
+    "typecheck:libs": "tsc --build",
+    "typecheck:api": "deno task --config artifacts/api-server/deno.json typecheck",
+    "typecheck:ventas": "deno task --config artifacts/sospirato-ventas/deno.json typecheck",
+    "typecheck:mockup": "deno task --config artifacts/mockup-sandbox/deno.json typecheck",
+    "typecheck:scripts": "deno task --config scripts/deno.json typecheck",
+    "codegen": "deno task --config lib/api-spec/deno.json codegen",
+    "db:push": "deno task --config lib/db/deno.json push",
+    "hello": "deno task --config scripts/deno.json hello",
+    "install": "deno install && deno run --allow-read --allow-write scripts/src/clean-workspace-node-modules.ts"
+  },
+  "fmt": {
+    "include": ["artifacts", "lib", "scripts", "deno.json"],
+    "exclude": ["**/dist/**", "**/node_modules/**"]
+  }
+}

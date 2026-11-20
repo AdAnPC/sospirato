@@ -93,7 +93,7 @@ function EmptyIcon({ children }: { children: ReactNode }) {
 function Dashboard() {
   const summaryQuery = useGetDashboardSummary({ query: { queryKey: getGetDashboardSummaryQueryKey() } });
   const productsQuery = useGetProducts({ query: { queryKey: getGetProductsQueryKey() } });
-  const products = productsQuery.data ?? [];
+  const products = Array.isArray(productsQuery.data) ? productsQuery.data : [];
   const summary = summaryQuery.data;
   const saleForm = useForm<SaleFormInput>({
     resolver: zodResolver(saleFormSchema),
@@ -245,7 +245,8 @@ function ProductsPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [notice, setNotice] = useState('');
-  const items = (query.data ?? []).filter((item) => item.name.toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es')) || (item.category ?? '').toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es')));
+  const products = Array.isArray(query.data) ? query.data : [];
+  const items = products.filter((item) => item.name.toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es')) || (item.category ?? '').toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es')));
   const toggle = (product: Product) => update.mutate({ id: product.id, data: { isActive: !product.isActive } }, {
     onSuccess: () => { void client.invalidateQueries({ queryKey: getGetProductsQueryKey() }); setNotice(product.isActive ? 'Producto desactivado.' : 'Producto activado.'); },
     onError: () => setNotice('No se pudo cambiar el estado. Intenta de nuevo.'),
@@ -255,7 +256,7 @@ function ProductsPage() {
       <div><p className="eyebrow">Lo que ofreces</p><h2 className="section-title">Productos registrados</h2></div>
       <button className="btn btn-primary" onClick={() => { setEditing(null); setDialogOpen(true); }} data-testid="button-add-product"><Plus />Agregar producto</button>
     </div>
-    <div className="toolbar"><div className="search-wrap"><Search /><input className="control" placeholder="Buscar producto o categoría" value={search} onChange={(e) => setSearch(e.target.value)} data-testid="input-search-products" /></div><span className="status-note" data-testid="text-product-count">{query.data?.length ?? 0} productos</span></div>
+    <div className="toolbar"><div className="search-wrap"><Search /><input className="control" placeholder="Buscar producto o categoría" value={search} onChange={(e) => setSearch(e.target.value)} data-testid="input-search-products" /></div><span className="status-note" data-testid="text-product-count">{products.length} productos</span></div>
     {notice && <p role="status" className="status-note" data-testid="status-product-action">{notice}</p>}
     {query.isError && <div className="error-box" role="alert">No fue posible cargar los productos. <button onClick={() => query.refetch()} className="text-link" data-testid="button-retry-products">Reintentar</button></div>}
     <div className="data-panel">
@@ -281,7 +282,8 @@ function SalesPage() {
   const client = useQueryClient();
   const cancel = useCancelSale();
   const [notice, setNotice] = useState('');
-  const filtered = (salesQuery.data ?? []).filter((sale) => {
+  const sales = Array.isArray(salesQuery.data) ? salesQuery.data : [];
+  const filtered = sales.filter((sale) => {
     const query = search.trim().toLocaleLowerCase('es');
     return !query || [sale.customerName, sale.note, ...sale.items.map((item) => item.productName), String(sale.id)].some((v) => (v ?? '').toLocaleLowerCase('es').includes(query));
   });

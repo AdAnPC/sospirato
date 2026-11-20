@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "codegen": "orval --config ./orval.config.ts"
+  }
+}
